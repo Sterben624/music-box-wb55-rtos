@@ -30,6 +30,7 @@
 #include "pn532_stm32f1.h"
 #include "df_player.h"
 #include "ssd1306.h"
+#include "ws2812b.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,6 +118,8 @@ int main(void)
 	dfplayer_Init();
 	dfplayer_SetVolume(1);
 	dfplayer_SetSource(PLAYBACK_SOURCE_TF);
+
+	WS2812B_Init();
 
 	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   /* USER CODE END 2 */
