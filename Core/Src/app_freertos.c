@@ -31,6 +31,7 @@
 #include "stepper.h"
 #include <string.h>
 #include <stdio.h>
+#include "ws2812b.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -483,6 +484,23 @@ void StartTaskDisplay(void const * argument)
 			SSD1306_UpdateScreen();
 
 			osMutexRelease(i2c_mutexHandle);
+
+			if (msg.motor_running && !msg.is_paused)
+			{
+			    /* Playing - full brightness */
+			    WS2812B_Fill(255, 0, 128);
+			}
+			else if (!msg.motor_running && msg.is_paused)
+			{
+			    /* Paused - dim */
+				WS2812B_Fill(60, 0, 30);
+			}
+			else
+			{
+			    /* Stopped - off */
+			    WS2812B_Clear();
+			}
+			WS2812B_Show();
 		}
 	}
   /* USER CODE END StartTaskDisplay */
